@@ -1,11 +1,12 @@
 require "test_helper"
 
 class StillLifeTest < Test::Unit::TestCase
-  def test_that_it_has_a_version_number
-    refute_nil ::StillLife::VERSION
-  end
-
-  def test_it_does_something_useful
-    assert false
+  def test_executing_tests_in_the_dummy_app
+    Dir.chdir "#{__dir__}/dummy_app" do
+      Bundler.with_clean_env do
+        system 'bundle e rails test'
+        system 'bundle e rails test:system'
+      end
+    end
   end
 end
