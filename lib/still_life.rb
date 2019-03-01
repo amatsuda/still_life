@@ -25,6 +25,33 @@ module StillLife
       end
     end
   end
+
+  module PageBodyRecorder
+    def self.prepended(kls)
+      Capybara::Node::Element.prepend Module.new {
+        def click(*)
+          body_was = session.body
+          super.tap do
+            if session.body.present? && (session.body != body_was)
+              location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
+              StillLife.record_html(session.body, location)
+            end
+          end
+        end
+      }
+
+      Capybara::Session.prepend Module.new {
+        def visit(*)
+          super.tap do
+            if body.present?
+              location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
+              StillLife.record_html(body, location)
+            end
+          end
+        end
+      }
+    end
+  end
 end
 
 ActiveSupport.on_load :action_dispatch_integration_test do
