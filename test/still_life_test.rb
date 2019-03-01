@@ -6,7 +6,11 @@ class StillLifeTest < Test::Unit::TestCase
       FileUtils.rm_rf 'tmp/html/'
 
       Bundler.with_clean_env do
-        system 'bundle e rails test'
+        if ENV['TEST_FRAMEWORK'] == 'test-unit'
+          system 'BUNDLE_GEMFILE=Gemfile.test-unit bundle e rails test'
+        else
+          system 'bundle e rails test'
+        end
 
         assert_html_dumped 'test/controllers/users_controller_test.rb-9'
         assert_html_dumped 'test/controllers/users_controller_test.rb-14'
@@ -17,7 +21,11 @@ class StillLifeTest < Test::Unit::TestCase
         assert_html_dumped 'test/controllers/users_controller_test.rb-43'
         assert_html_dumped 'test/integration/users_integration_test.rb-9'
 
-        system 'bundle e rails test:system'
+        if ENV['TEST_FRAMEWORK'] == 'test-unit'
+          system 'BUNDLE_GEMFILE=Gemfile.test-unit bundle e rails test:system'
+        else
+          system 'bundle e rails test:system'
+        end
 
         assert_html_dumped 'test/system/users_test.rb-9'
         assert_html_dumped 'test/system/users_test.rb-14'
