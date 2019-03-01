@@ -10,3 +10,4 @@ Gemfile.lock
 log/
 *.sqlite3
 /test/dummy_app/tmp/cache/
+/test/dummy_app/tmp/html/
