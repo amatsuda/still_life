@@ -15,7 +15,7 @@ class StillLifeTest < Test::Unit::TestCase
         assert_html_dumped 'test/controllers/users_controller_test.rb-32'
         assert_html_dumped 'test/controllers/users_controller_test.rb-37'
         assert_html_dumped 'test/controllers/users_controller_test.rb-43'
-        assert_html_dumped 'test/integration/users_test.rb-9'
+        assert_html_dumped 'test/integration/users_integration_test.rb-9'
 
         system 'bundle e rails test:system'
 
