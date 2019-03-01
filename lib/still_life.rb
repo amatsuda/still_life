@@ -30,6 +30,8 @@ module StillLife
     def self.prepended(kls)
       Capybara::Node::Element.prepend Module.new {
         def click(*)
+          return super if Thread.current[:_still_life_inside_modal]
+
           body_was = session.body
           super.tap do
             if session.body.present? && (session.body != body_was)
@@ -48,6 +50,32 @@ module StillLife
               StillLife.record_html(body, location)
             end
           end
+        end
+
+        private def accept_modal(*)
+          Thread.current[:_still_life_inside_modal] = true
+          body_was = body
+          super.tap do
+            if body.present? && (body != body_was)
+              location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
+              StillLife.record_html(body, location)
+            end
+          end
+        ensure
+          Thread.current[:_still_life_inside_modal] = nil
+        end
+
+        private def dismiss_modal(*)
+          Thread.current[:_still_life_inside_modal] = true
+          body_was = body
+          super.tap do
+            if body.present? && (body != body_was)
+              location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
+              StillLife.record_html(body, location)
+            end
+          end
+        ensure
+          Thread.current[:_still_life_inside_modal] = nil
         end
       }
     end
