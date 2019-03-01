@@ -22,3 +22,7 @@ module StillLife
     end
   end
 end
+
+ActiveSupport.on_load :action_dispatch_integration_test do
+  ActionDispatch::Integration::Session.prepend StillLife::ResponseBodyRecorder
+end
