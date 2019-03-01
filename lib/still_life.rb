@@ -57,3 +57,6 @@ end
 ActiveSupport.on_load :action_dispatch_integration_test do
   ActionDispatch::Integration::Session.prepend StillLife::ResponseBodyRecorder
 end
+ActiveSupport.on_load :action_dispatch_system_test_case do
+  ActionDispatch::SystemTestCase.prepend StillLife::PageBodyRecorder
+end
