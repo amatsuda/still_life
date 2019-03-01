@@ -5,7 +5,11 @@ require_relative 'still_life/version'
 module StillLife
   def self.record_html(html, location)
     if html.present?
-      pathname = Rails.root.join("tmp/html/#{location.tr(':', '-')}.html")
+      pathname, i = Rails.root.join("tmp/html/#{location.tr(':', '-')}.html"), 1
+      while pathname.exist?
+        i += 1
+        pathname = Rails.root.join("tmp/html/#{location.tr(':', '-')}_#{i}.html")
+      end
       pathname.parent.mkpath
       pathname.write html
     end
