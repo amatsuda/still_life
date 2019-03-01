@@ -34,6 +34,7 @@ module StillLife
 
           body_was = session.body
           super.tap do
+            session.find('body')
             if session.body.present? && (session.body != body_was)
               location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
               StillLife.record_html(session.body, location)
