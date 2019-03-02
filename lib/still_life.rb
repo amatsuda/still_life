@@ -3,7 +3,9 @@
 require_relative 'still_life/version'
 
 module StillLife
-  def self.record_html(html, location)
+  def self.record_html(html)
+    location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
+
     if html.present?
       pathname, i = Rails.root.join("tmp/html/#{location.tr(':', '-')}.html"), 1
       while pathname.exist?
@@ -19,8 +21,7 @@ module StillLife
     %W(get post put patch delete).each do |meth|
       define_method meth do |*args|
         super(*args).tap do
-          location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
-          StillLife.record_html(response.body, location)
+          StillLife.record_html(response.body)
         end
       end
     end
@@ -36,8 +37,7 @@ module StillLife
           super.tap do
             session.find('body')
             if session.body.present? && (session.body != body_was)
-              location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
-              StillLife.record_html(session.body, location)
+              StillLife.record_html(session.body)
             end
           end
         end
@@ -47,8 +47,7 @@ module StillLife
         def visit(*)
           super.tap do
             if body.present?
-              location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
-              StillLife.record_html(body, location)
+              StillLife.record_html(body)
             end
           end
         end
@@ -58,8 +57,7 @@ module StillLife
           body_was = body
           super.tap do
             if body.present? && (body != body_was)
-              location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
-              StillLife.record_html(body, location)
+              StillLife.record_html(body)
             end
           end
         ensure
@@ -71,8 +69,7 @@ module StillLife
           body_was = body
           super.tap do
             if body.present? && (body != body_was)
-              location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
-              StillLife.record_html(body, location)
+              StillLife.record_html(body)
             end
           end
         ensure
