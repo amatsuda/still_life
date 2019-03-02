@@ -9,7 +9,7 @@ module StillLife
         ActionDispatch::Integration::Session.prepend StillLife::ResponseBodyRecorder
       end
       ActiveSupport.on_load :action_dispatch_system_test_case do
-        ActionDispatch::SystemTestCase.prepend StillLife::PageBodyRecorder
+        ActionDispatch::SystemTestCase.prepend StillLife::CapybaraExtension
       end
 
       begin
@@ -19,7 +19,7 @@ module StillLife
         RSpec.configure do |config|
           # config.prepend StillLife::ResponseBodyRecorder, type: :request
           config.prepend StillLife::ResponseBodyRecorder, type: :controller
-          config.prepend StillLife::PageBodyRecorder, type: :feature
+          config.prepend StillLife::CapybaraExtension, type: :feature
         end
       rescue LoadError
       end
