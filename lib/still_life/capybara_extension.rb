@@ -50,7 +50,7 @@ module StillLife
       end
     end
 
-    def self.prepended(kls)
+    def self.included(*)
       Capybara::Node::Element.prepend ElementExtension
       Capybara::Session.prepend SessionExtension
     end
