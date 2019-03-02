@@ -97,6 +97,7 @@ begin
   RSpec.configure do |config|
     # config.prepend StillLife::ResponseBodyRecorder, type: :request
     config.prepend StillLife::ResponseBodyRecorder, type: :controller
+    config.prepend StillLife::PageBodyRecorder, type: :feature
   end
 rescue LoadError
 end
