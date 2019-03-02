@@ -89,3 +89,14 @@ end
 ActiveSupport.on_load :action_dispatch_system_test_case do
   ActionDispatch::SystemTestCase.prepend StillLife::PageBodyRecorder
 end
+
+begin
+  require 'rspec-rails'
+
+  #TODO maybe we could use some kind of hook instead of directly configuring here?
+  RSpec.configure do |config|
+    # config.prepend StillLife::ResponseBodyRecorder, type: :request
+    config.prepend StillLife::ResponseBodyRecorder, type: :controller
+  end
+rescue LoadError
+end
