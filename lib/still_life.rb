@@ -3,7 +3,7 @@
 require_relative 'still_life/version'
 
 module StillLife
-  def self.record_html(html)
+  def self.draw(html)
     location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
 
     if html.present?
@@ -21,7 +21,7 @@ module StillLife
     %W(get post put patch delete).each do |meth|
       define_method meth do |*args|
         super(*args).tap do
-          StillLife.record_html(response.body)
+          StillLife.draw(response.body)
         end
       end
     end
@@ -37,7 +37,7 @@ module StillLife
           super.tap do
             session.find('body')
             if session.body.present? && (session.body != body_was)
-              StillLife.record_html(session.body)
+              StillLife.draw(session.body)
             end
           end
         end
@@ -47,7 +47,7 @@ module StillLife
         def visit(*)
           super.tap do
             if body.present?
-              StillLife.record_html(body)
+              StillLife.draw(body)
             end
           end
         end
@@ -57,7 +57,7 @@ module StillLife
           body_was = body
           super.tap do
             if body.present? && (body != body_was)
-              StillLife.record_html(body)
+              StillLife.draw(body)
             end
           end
         ensure
@@ -69,7 +69,7 @@ module StillLife
           body_was = body
           super.tap do
             if body.present? && (body != body_was)
-              StillLife.record_html(body)
+              StillLife.draw(body)
             end
           end
         ensure
