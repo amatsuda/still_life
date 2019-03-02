@@ -6,20 +6,34 @@ class StillLifeTest < Test::Unit::TestCase
       FileUtils.rm_rf 'tmp/html/'
 
       Bundler.with_clean_env do
-        if ENV['TEST_FRAMEWORK'] == 'test-unit'
+        case ENV['TEST_FRAMEWORK']
+        when 'test-unit'
           system 'BUNDLE_GEMFILE=Gemfile.test-unit bundle e rails test'
+        when 'rspec'
+          system 'BUNDLE_GEMFILE=Gemfile.rspec bundle e rspec spec/controllers/ spec/requests/'
         else
           system 'bundle e rails test'
         end
 
-        assert_html_dumped 'test/controllers/users_controller_test.rb-9'
-        assert_html_dumped 'test/controllers/users_controller_test.rb-14'
-        assert_html_dumped 'test/controllers/users_controller_test.rb-20'
-        assert_html_dumped 'test/controllers/users_controller_test.rb-27'
-        assert_html_dumped 'test/controllers/users_controller_test.rb-32'
-        assert_html_dumped 'test/controllers/users_controller_test.rb-37'
-        assert_html_dumped 'test/controllers/users_controller_test.rb-43'
-        assert_html_dumped 'test/integration/users_integration_test.rb-9'
+        case ENV['TEST_FRAMEWORK']
+        when 'rspec'
+          assert_html_dumped 'spec/controllers/users_controller_spec.rb-105'
+          assert_html_dumped 'spec/controllers/users_controller_spec.rb-112'
+          assert_html_dumped 'spec/controllers/users_controller_spec.rb-130'
+          assert_html_dumped 'spec/controllers/users_controller_spec.rb-136'
+          assert_html_dumped 'spec/controllers/users_controller_spec.rb-79'
+          assert_html_dumped 'spec/controllers/users_controller_spec.rb-84'
+          assert_html_dumped 'spec/requests/users_spec.rb-6'
+        else
+          assert_html_dumped 'test/controllers/users_controller_test.rb-9'
+          assert_html_dumped 'test/controllers/users_controller_test.rb-14'
+          assert_html_dumped 'test/controllers/users_controller_test.rb-20'
+          assert_html_dumped 'test/controllers/users_controller_test.rb-27'
+          assert_html_dumped 'test/controllers/users_controller_test.rb-32'
+          assert_html_dumped 'test/controllers/users_controller_test.rb-37'
+          assert_html_dumped 'test/controllers/users_controller_test.rb-43'
+          assert_html_dumped 'test/integration/users_integration_test.rb-9'
+        end
 
         if ENV['TEST_FRAMEWORK'] == 'test-unit'
           system 'BUNDLE_GEMFILE=Gemfile.test-unit bundle e rails test:system'
