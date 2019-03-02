@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'still_life/version'
+require_relative 'still_life/action_dispatch_extension'
 require_relative 'still_life/capybara_extension'
 require_relative 'still_life/railtie'
 
@@ -16,16 +17,6 @@ module StillLife
       end
       pathname.parent.mkpath
       pathname.write html
-    end
-  end
-
-  module ResponseBodyRecorder
-    %W(get post put patch delete).each do |meth|
-      define_method meth do |*args|
-        super(*args).tap do
-          StillLife.draw(response.body)
-        end
-      end
     end
   end
 end
