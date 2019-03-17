@@ -7,7 +7,7 @@ require_relative 'still_life/railtie'
 
 module StillLife
   def self.draw(html)
-    location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/)
+    location = caller.detect {|c| c =~ /^#{Rails.root}/}.remove(Rails.root.to_s, /:in .*$/).prepend("#{ENV['STILL_LIFE'] || ENV['STILLLIFE']}/")
 
     if html.present?
       pathname, i = Rails.root.join("tmp/html/#{location.tr(':', '-')}.html"), 1
