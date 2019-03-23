@@ -10,11 +10,11 @@ class StillLifeTest < Test::Unit::TestCase
       Bundler.with_clean_env do
         case ENV['TEST_FRAMEWORK']
         when 'test-unit'
-          system "BUNDLE_GEMFILE=Gemfile.test-unit STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails test"
+          system "BUNDLE_GEMFILE=Gemfile.test-unit bundle u && BUNDLE_GEMFILE=Gemfile.test-unit STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails test"
         when 'rspec'
-          system "BUNDLE_GEMFILE=Gemfile.rspec STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rspec spec/controllers/ spec/requests/"
+          system "BUNDLE_GEMFILE=Gemfile.rspec bundle u && BUNDLE_GEMFILE=Gemfile.rspec STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rspec spec/controllers/ spec/requests/"
         else
-          system "STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails test"
+          system "bundle u && STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails test"
         end
 
         case ENV['TEST_FRAMEWORK']
@@ -39,11 +39,11 @@ class StillLifeTest < Test::Unit::TestCase
 
         case ENV['TEST_FRAMEWORK']
         when 'test-unit'
-          system "BUNDLE_GEMFILE=Gemfile.test-unit STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails test:system"
+          system "BUNDLE_GEMFILE=Gemfile.test-unit bundle u && BUNDLE_GEMFILE=Gemfile.test-unit STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails test:system"
         when 'rspec'
-          system "BUNDLE_GEMFILE=Gemfile.rspec STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails spec:system"
+          system "BUNDLE_GEMFILE=Gemfile.rspec bundle u && BUNDLE_GEMFILE=Gemfile.rspec STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails spec:system"
         else
-          system "STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails test:system"
+          system "bundle u && STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rails test:system"
         end
 
         case ENV['TEST_FRAMEWORK']
