@@ -2,6 +2,10 @@
 sudo: false
 language: ruby
 cache: bundler
+
+addons:
+  chrome: stable
+
 rvm:
   - 2.6.2
 before_install: gem install bundler -v 2.0.1
