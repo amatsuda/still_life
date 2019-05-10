@@ -14,3 +14,8 @@ before_install:
 
 rvm:
   - 2.6.2
+
+env:
+  - TEST_FRAMEWORK=test-unit
+  - TEST_FRAMEWORK=minitest
+  - TEST_FRAMEWORK=rspec
