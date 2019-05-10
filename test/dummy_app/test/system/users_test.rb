@@ -14,8 +14,10 @@ class UsersTest < ApplicationSystemTestCase
     visit users_url
     click_on "New User"
 
-    fill_in "Name", with: @user.name
-    click_on "Create User"
+    within "form" do
+      fill_in "Name", with: @user.name
+      click_on "Create User"
+    end
 
     assert_text "User was successfully created"
     click_on "Back"
