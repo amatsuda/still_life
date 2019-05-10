@@ -8,8 +8,12 @@ module StillLife
 
         body_was = session.body
         super.tap do
-          if session.body.present? && (session.body != body_was)
-            StillLife.draw(session.body)
+          3.times do
+            if session.body.present? && (session.body != body_was)
+              StillLife.draw(session.body)
+            else
+              sleep(0.5) && next
+            end
           end
         end
       end
