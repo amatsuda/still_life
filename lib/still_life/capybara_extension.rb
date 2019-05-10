@@ -8,7 +8,6 @@ module StillLife
 
         body_was = session.body
         super.tap do
-          session.find('body')
           if session.body.present? && (session.body != body_was)
             StillLife.draw(session.body)
           end
