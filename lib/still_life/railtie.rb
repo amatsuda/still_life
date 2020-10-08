@@ -21,6 +21,7 @@ module StillLife
             # config.prepend StillLife::ActionDispatchExtension, type: :request
             config.prepend StillLife::ActionDispatchExtension, type: :controller
             config.include StillLife::CapybaraExtension, type: :feature
+            config.include StillLife::CapybaraExtension, type: :system
           end
         rescue LoadError
         end
