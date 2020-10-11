@@ -2,32 +2,32 @@
 
 module StillLife
   module ActionDispatchExtension
-    def get(*args)
-      super(*args).tap do
+    def get(*, **)
+      super.tap do
         StillLife.draw(response.body)
       end
     end
 
-    def post(*args)
-      super(*args).tap do
+    def post(*, **)
+      super.tap do
         StillLife.draw(response.body)
       end
     end
 
-    def put(*args)
-      super(*args).tap do
+    def put(*, **)
+      super.tap do
         StillLife.draw(response.body)
       end
     end
 
-    def patch(*args)
-      super(*args).tap do
+    def patch(*, **)
+      super.tap do
         StillLife.draw(response.body)
       end
     end
 
-    def delete(*args)
-      super(*args).tap do
+    def delete(*, **)
+      super.tap do
         StillLife.draw(response.body)
       end
     end
