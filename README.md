@@ -122,15 +122,18 @@ and push some more commits...
 ### 4. Compare the results, and make sure there's no unexpected diffs
 
 ```sh
-% diff -r tmp/html/rails52 tmp/html/rails60
+% git diff --no-index --color-words tmp/html/rails52/ tmp/html/rails60/
 ```
 
 
 ## Notes
+### git diff
+As written in the above example, `git diff --no-index --color-words` should perfectly work for recursively comparing two output directories.
+
 ### Random Values
 
 If your response includes some kind of random values, the test results may change between each test runs.
-In such case, maybe you could specify a random seed, or mock the random source in your app, or `grep -v` is always your friend.
+In such case, maybe you could specify a random seed, or mock the random source in your app.
 
 
 ## TODOs / Known Issues
