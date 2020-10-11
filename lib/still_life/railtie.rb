@@ -13,17 +13,19 @@ module StillLife
           ActionDispatch::SystemTestCase.include StillLife::CapybaraExtension
         end
 
-        begin
-          require 'rspec-rails'
+        ActiveSupport.on_load :active_support_test_case do
+          begin
+            require 'rspec-rails'
 
-          #TODO maybe we could use some kind of hook instead of directly configuring here?
-          RSpec.configure do |config|
-            # config.prepend StillLife::ActionDispatchExtension, type: :request
-            config.prepend StillLife::ActionDispatchExtension, type: :controller
-            config.include StillLife::CapybaraExtension, type: :feature
-            config.include StillLife::CapybaraExtension, type: :system
+            # TODO: maybe we could use some kind of hook instead of directly configuring here?
+            RSpec.configure do |config|
+              config.prepend StillLife::ActionDispatchExtension, type: :request
+              config.prepend StillLife::ActionDispatchExtension, type: :controller
+              config.include StillLife::CapybaraExtension, type: :feature
+              config.include StillLife::CapybaraExtension, type: :system
+            end
+          rescue LoadError
           end
-        rescue LoadError
         end
       end
     end
