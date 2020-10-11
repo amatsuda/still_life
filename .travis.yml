@@ -7,10 +7,9 @@ addons:
 before_install:
   - sudo apt update -qq
   - sudo apt install -y chromium-chromedriver
-  - gem install bundler -v 2.0.1
 
 rvm:
-  - 2.6.2
+  - 2.7.2
 
 env:
   - TEST_FRAMEWORK=test-unit
