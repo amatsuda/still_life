@@ -7,7 +7,7 @@ class StillLifeTest < Test::Unit::TestCase
     Dir.chdir "#{__dir__}/dummy_app" do
       FileUtils.rm_rf 'tmp/html/'
 
-      Bundler.with_clean_env do
+      Bundler.with_unbundled_env do
         case ENV['TEST_FRAMEWORK']
         when 'test-unit'
           system "BUNDLE_GEMFILE=Gemfile.test-unit bundle u && BUNDLE_GEMFILE=Gemfile.test-unit STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e bin/rails test"
