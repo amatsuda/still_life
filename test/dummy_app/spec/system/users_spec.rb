@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.feature "Users", type: :system do
+RSpec.describe "Users CRUD", type: :system do
   fixtures :users
 
-  background do
+  before do
     @user = users(:one)
   end
 
