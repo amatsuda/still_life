@@ -139,6 +139,7 @@ In such case, maybe you could specify a random seed, or mock the random source i
 ## TODOs / Known Issues
 - The Capybara monkeypatch sometimes fails to get the `page.body` due to Capybara timing problem
 - Support older versions of Rails, Capybara, and Ruby
+- Fix the CI with RSpec + headless Chrome
 
 
 ## Contributing
