@@ -1,0 +1,105 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '05 12 * * *'
+
+jobs:
+  build:
+    name: Ruby ${{ matrix.ruby_version }} / Rails ${{ matrix.rails_version }} / ${{ matrix.test_framework }}
+    strategy:
+      matrix:
+        ruby_version: [ruby-head, '3.3', '3.2', '3.1']
+        rails_version: [edge, '7.1', '7.0', '6.1']
+        test_framework: ['test-unit', 'minitest', 'rspec']
+
+        include:
+          - ruby_version: '3.0'
+            rails_version: '7.1'
+            test_framework: 'test-unit'
+          - ruby_version: '3.0'
+            rails_version: '7.1'
+            test_framework: 'minitest'
+          - ruby_version: '3.0'
+            rails_version: '7.1'
+            test_framework: 'rspec'
+          - ruby_version: '3.0'
+            rails_version: '7.0'
+            test_framework: 'test-unit'
+          - ruby_version: '3.0'
+            rails_version: '7.0'
+            test_framework: 'minitest'
+          - ruby_version: '3.0'
+            rails_version: '7.0'
+            test_framework: 'rspec'
+          - ruby_version: '3.0'
+            rails_version: '6.1'
+            test_framework: 'test-unit'
+          - ruby_version: '3.0'
+            rails_version: '6.1'
+            test_framework: 'minitest'
+          - ruby_version: '3.0'
+            rails_version: '6.1'
+            test_framework: 'rspec'
+
+          - ruby_version: '2.7'
+            rails_version: '7.1'
+            test_framework: 'test-unit'
+          - ruby_version: '2.7'
+            rails_version: '7.1'
+            test_framework: 'minitest'
+          - ruby_version: '2.7'
+            rails_version: '7.1'
+            test_framework: 'rspec'
+          - ruby_version: '2.7'
+            rails_version: '7.0'
+            test_framework: 'test-unit'
+          - ruby_version: '2.7'
+            rails_version: '7.0'
+            test_framework: 'minitest'
+          - ruby_version: '2.7'
+            rails_version: '7.0'
+            test_framework: 'rspec'
+          - ruby_version: '2.7'
+            rails_version: '6.1'
+            test_framework: 'test-unit'
+          - ruby_version: '2.7'
+            rails_version: '6.1'
+            test_framework: 'minitest'
+          - ruby_version: '2.7'
+            rails_version: '6.1'
+            test_framework: 'rspec'
+          - ruby_version: '2.7'
+            rails_version: '6.0'
+            test_framework: 'test-unit'
+          - ruby_version: '2.7'
+            rails_version: '6.0'
+            test_framework: 'minitest'
+          - ruby_version: '2.7'
+            rails_version: '6.0'
+            test_framework: 'rspec'
+
+    env:
+      RAILS_VERSION: ${{ matrix.rails_version }}
+      TEST_FRAMEWORK: ${{ matrix.test_framework }}
+
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby_version }}
+          rubygems: ${{ (matrix.ruby_version < '2.7' && 'default') || (matrix.ruby_version < '3' && '3.4.22') || 'latest' }}
+          bundler: ${{ matrix.bundler_version }}
+          bundler-cache: true
+        continue-on-error: ${{ matrix.allow_failures == 'true' }}
+
+      - uses: browser-actions/setup-chrome@v1
+      - run: chrome --version
+
+      - run: bundle exec rake
+        continue-on-error: ${{ matrix.allow_failures == 'true' }}
