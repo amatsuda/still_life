@@ -21,12 +21,12 @@ RSpec.describe StillLife do
     system "RAILS_VERSION=#{ENV['RAILS_VERSION']} bundle e rails db:setup"
     system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rspec spec/controllers/ spec/requests/"
 
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-105"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-112"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-130"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-136"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-79"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-84"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-106"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-113"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-131"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-137"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-80"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-85"))
     expect(File).to exist(dump_dir("requests/users_spec.rb-6"))
 
     system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e bin/rails spec:system"
