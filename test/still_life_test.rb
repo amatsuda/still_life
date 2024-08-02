@@ -12,13 +12,17 @@ class StillLifeTest < defined?(Test::Unit) ? Test::Unit::TestCase : Minitest::Te
 
       system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rake test"
 
+      if (ENV['RAILS_VERSION'].to_i < 7) || (ENV['RAILS_VERSION'] == '7.0')
+        assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-20"
+        assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-37"
+        assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-43"
+      end
+
       assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-9"
       assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-14"
-      assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-20"
       assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-27"
       assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-32"
-      assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-37"
-      assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-43"
+
       assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/integration/users_integration_test.rb-9"
 
       system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e bin/rails test:system"

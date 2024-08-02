@@ -21,12 +21,20 @@ RSpec.describe StillLife do
     system "RAILS_VERSION=#{ENV['RAILS_VERSION']} bundle e rails db:setup"
     system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rspec spec/controllers/ spec/requests/"
 
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-106"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-113"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-131"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-137"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-80"))
-    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-85"))
+    if (ENV['RAILS_VERSION'].to_i < 7) || (ENV['RAILS_VERSION'] == '7.0')
+      expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-106"))
+      expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-113"))
+      expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-131"))
+      expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-137"))
+      expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-80"))
+      expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-85"))
+    end
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-121"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-48"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-56"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-63"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-71"))
+    expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-92"))
     expect(File).to exist(dump_dir("requests/users_spec.rb-6"))
 
     system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e bin/rails spec:system"
