@@ -4,7 +4,13 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require 'rails'
 require "still_life"
 
-require 'test/unit'
+case ENV['TEST_FRAMEWORK']
+when 'test-unit'
+  require 'test/unit'
+else
+  require 'minitest'
+  require 'minitest/autorun'
+end
 
 Test::Unit::TestCase.class_eval do
   def assert_html_dumped(path)
