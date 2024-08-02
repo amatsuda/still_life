@@ -98,8 +98,8 @@ jobs:
           bundler-cache: true
         continue-on-error: ${{ matrix.allow_failures == 'true' }}
 
-      - uses: browser-actions/setup-chrome@v1
-      - run: chrome --version
+      # - uses: browser-actions/setup-chrome@v1
+      # - run: chrome --version
 
       - run: bundle exec rake
         continue-on-error: ${{ matrix.allow_failures == 'true' }}
