@@ -100,6 +100,7 @@ jobs:
 
       - uses: browser-actions/setup-chrome@v1
         with:
+          chrome-version: '127.0.6533.88'
           install-chromedriver: true
       - run: chrome --version
 
