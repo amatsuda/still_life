@@ -72,6 +72,7 @@ Capybara.register_driver :headless_chrome do |app|
   options.add_argument '--disable-gpu'
   options.add_argument '--window-size=1024,768'
   options.add_argument '--remote-debugging-pipe'
+  options.add_preference "download.default_directory", Rails.root.join("tmp/downloads")
   Capybara::Selenium::Driver.new app, browser: :chrome, options: options
 end
 
