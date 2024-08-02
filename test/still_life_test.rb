@@ -7,12 +7,7 @@ class StillLifeTest < defined?(Test::Unit) ? Test::Unit::TestCase : Minitest::Te
     Dir.chdir "#{__dir__}/dummy_app" do
       FileUtils.rm_rf 'tmp/html/'
 
-      case ENV['TEST_FRAMEWORK']
-      when 'test-unit'
-        system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rake test"
-      else
-        system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e bin/rails test"
-      end
+      system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rake test"
 
       assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-9"
       assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/controllers/users_controller_test.rb-14"
