@@ -17,6 +17,8 @@ RSpec.describe StillLife do
   end
 
   specify do
+    system "RAILS_VERSION=#{ENV['RAILS_VERSION']} bundle u"
+    system "RAILS_VERSION=#{ENV['RAILS_VERSION']} bundle e rails db:setup"
     system "RAILS_VERSION=#{ENV['RAILS_VERSION']} STILL_LIFE=#{STILL_LIFE_ENV_VAR} bundle e rspec spec/controllers/ spec/requests/"
 
     expect(File).to exist(dump_dir("controllers/users_controller_spec.rb-105"))
