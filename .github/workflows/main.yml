@@ -98,5 +98,10 @@ jobs:
           bundler-cache: true
         continue-on-error: ${{ matrix.allow_failures == 'true' }}
 
+      - uses: nanasess/setup-chromedriver@v2.2.2
+      - run: |
+          export DISPLAY=:99
+          chromedriver --url-base=/wd/hub &
+
       - run: bundle exec rake
         continue-on-error: ${{ matrix.allow_failures == 'true' }}
