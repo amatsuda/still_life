@@ -1,6 +1,6 @@
 require "test_helper"
 
-class StillLifeTest < Test::Unit::TestCase
+class StillLifeTest < defined?(Test::Unit) ? Test::Unit::TestCase : Minitest::Test
   STILL_LIFE_ENV_VAR = 'test'
 
   def test_executing_tests_in_the_dummy_app
@@ -37,5 +37,9 @@ class StillLifeTest < Test::Unit::TestCase
       assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/system/users_test.rb-38"
       # assert_html_dumped "#{STILL_LIFE_ENV_VAR}/test/system/users_test.rb-39"
     end
+  end
+
+  private def assert_html_dumped(path)
+    assert File.exist?(f = "#{__dir__}/dummy_app/tmp/html/#{path}.html") && File.read(f).present?, "#{f} does not exist"
   end
 end
