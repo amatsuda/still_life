@@ -85,9 +85,11 @@ jobs:
       RAILS_VERSION: ${{ matrix.rails_version }}
       TEST_FRAMEWORK: ${{ matrix.test_framework }}
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
+      - run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable
+
       - uses: actions/checkout@v4
 
       - uses: ruby/setup-ruby@v1
@@ -97,11 +99,6 @@ jobs:
           bundler: ${{ matrix.bundler_version }}
           bundler-cache: true
         continue-on-error: ${{ matrix.allow_failures == 'true' }}
-
-      - uses: nanasess/setup-chromedriver@v2.2.2
-      - run: |
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub &
 
       - run: bundle exec rake
         continue-on-error: ${{ matrix.allow_failures == 'true' }}
